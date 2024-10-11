@@ -1,20 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="weather-form">
-            <input type="text" id="city-input" placeholder="Enter city name" />
-            <button id="search-btn">Get Weather</button>
+    <!-- Header Section -->
+    <header class="bg-dark text-white py-3 text-center">
+        <h1>Weather & Utilities Dashboard</h1>
+        <p>Your one-stop solution for weather, time, calendar, and alarms</p>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="container mt-4">
+        <!-- Sidebar Section -->
+        <div class="col-md-3 sidebar">
+            <h2>Menu</h2>
+            <div class="list-group">
+                <!-- Time Section -->
+                <a href="#" class="list-group-item icon" id="time-icon">
+                    <span class="material-icons">access_time</span> Time
+                </a>
+                <div class="content" id="time-content" style="display:none;">
+                    <p id="current-time"></p>
+                </div>
+
+               <!-- Calendar Section -->
+                <a href="#" class="list-group-item icon" id="calendar-icon">
+                <span class="material-icons">calendar_today</span> Calendar</a>
+                <div class="content" id="calendar-content" style="display:none;">
+                    <!-- This will display the current month and year -->
+                     <p id="calendar-header"></p>
+                     <!-- This is where the calendar days will be rendered -->
+                      <div class="calendar" id="calendar"></div>
+                </div>
+
+                <!-- Weather Section -->
+                <a href="#" class="list-group-item icon" id="weather-icon">
+                    <span class="material-icons">wb_sunny</span> Weather
+                </a>
+                <div class="content" id="weather-content" style="display:none;">
+                    <p>See current weather data above.</p>
+                </div>
+
+                <!-- Alarm Section -->
+                <a href="#" class="list-group-item icon" id="alarm-icon">
+                    <span class="material-icons">alarm</span> Alarm
+                </a>
+                <div class="content" id="alarm-content" style="display:none;">
+                    <p>No alarms set.</p>
+                </div>
+            </div>
         </div>
-        <div id="weather-info" class="weather-info"></div>
+
+        <!-- Weather Info Section -->
+        <div class="col-md-9 weather-info">
+            <h1>Weather Dashboard</h1>
+            <input type="text" id="city-input" placeholder="Enter city name" />
+            <button id="search-btn" class="btn btn-primary">Get Weather</button>
+            <div id="weather-info" class="weather-display"></div>
+        </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-white py-3 text-center mt-4">
+        <p>&copy; 2024 Weather Dashboard | All rights reserved.</p>
+        <p>Powered by <a href="https://openweathermap.org/" target="_blank" class="text-white">OpenWeatherMap</a></p>
+    </footer>
+
     <script src="script.js"></script>
+
+
 </body>
 </html>

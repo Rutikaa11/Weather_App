@@ -1,0 +1,160 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #3d3d3d;
+    color: white;
+    margin: 0;
+    transition: background-color 0.5s; /* Smooth background color transition */
+}
+
+.container {
+    display: flex;
+    padding: 20px;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 90%; /* Width of the sidebar */
+    background: linear-gradient(135deg, #3b3b3b, #4a4a4a); /* Subtle gradient for sidebar */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside the sidebar */
+    margin-right: 50px; /* Space between sidebar and weather info */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+    transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+    
+}
+.sidebar a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.sidebar:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8); /* Slightly lift the sidebar on hover */
+    
+}
+
+.sidebar h2 {
+    margin-bottom: 20px; /* Spae below heading */
+    font-size: 1.8em; /* Increase font size */
+    text-transform: uppercase; /* Uppercase text for a stronger look */
+    letter-spacing: 1px; /* Add letter spacing for a modern look */
+    border-bottom: 2px solid #6a6a6a; /* Add underline to the heading */
+    padding-bottom: 10px; /* Space below heading */
+    color: #ffffff; /* White color */
+}
+
+/* Icon Styling */
+.icon {
+    display: flex;
+    align-items: center;
+    margin: 15px 0; /* Increase spacing between icons */
+    cursor: pointer; /* Make icons clickable */
+    padding: 10px; /* Add padding for clickable area */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+    border-radius: 8px; /* Rounded corners for icons */
+}
+
+.icon:hover {
+    background-color: #5a5a5a; /* Darker background on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.icon .material-icons {
+    margin-right: 10px;
+    font-size: 1.8em; /* Increase icon size for better visibility */
+    color: #ffffff; /* Icon color */
+}
+
+/* List Group Styling */
+.list-group {
+    list-style-type: none; /* Remove default list style */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.list-group-item {
+    background-color: transparent; /* Transparent background for list items */
+    color: #ffffff; /* Text color */
+    padding: 15px; /* Add more padding for list items */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 10px; /* Space between items */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    border: 1px solid #6a6a6a; /* Border for a sleek look */
+}
+
+.list-group-item:hover {
+    background-color: #6a6a6a; /* Change background on hover */
+    transform: translateY(-3px); /* Slightly lift the item on hover */
+}
+
+.list-group-item:active {
+    transform: translateY(0); /* Reset on click */
+}
+
+/* Content Styling */
+.content {
+    background-color: #5a5a5a; /* Background color for content sections */
+    padding: 10px; /* Padding for content */
+    border-radius: 5px; /* Rounded corners */
+    margin-top: 5px; /* Space above content */
+    display: none; /* Hide by default */
+}
+
+/* Weather Info Section Styling */
+.weather-info {
+    background-color: #4a4a4a; /* Background color for weather info */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding for the weather info section */
+    width: 70%; /* Adjust width for the dashboard area */
+}
+
+h1, h2, h3 {
+    margin: 5px 0; /* Consistent margin */
+}
+
+input[type="text"] {
+    width: calc(100% - 22px); /* Full width for input */
+    padding: 10px; /* Padding for input */
+    margin-bottom: 10px; /* Space below input */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+}
+
+button {
+    padding: 10px; /* Padding for button */
+    background-color: #6a6a6a; /* Button background color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    color: white; /* Button text color */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+button:hover {
+    background-color: #7a7a7a; /* Darker background on hover */
+}
+
+.weather-display {
+    background-color: #6a6a6a; /* Background color for weather display */
+    padding: 15px; /* Padding inside the display */
+    border-radius: 10px; /* Rounded corners */
+    text-align: center; /* Center text */
+    margin-top: 20px; /* Space above */
+}
+
+/* Calendar styles */
+.calendar {
+    display: grid; /* Grid layout for calendar */
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+    gap: 3px; /* Space between days */
+    margin-top: 5px; /* Space above calendar */
+}
+
+.calendar div {
+    background-color: #7a7a7a; /* Background color for calendar days */
+    padding: 5px; /* Padding for each day */
+    border-radius: 3px; /* Rounded corners */
+    text-align: center; /* Center text */
+}
