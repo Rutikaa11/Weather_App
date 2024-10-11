@@ -16,15 +16,17 @@ async function getWeather() {
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
         
+        // Check if response is successful
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        // Check for a 404 error in the response
+        // Check if city is found
         if (data.cod === '404') {
             weatherInfoDiv.innerHTML = `<p>City not found. Please try again.</p>`;
+            body.style.backgroundColor = '#3d3d3d'; // Reset background color to default
             return;
         }
 
@@ -37,8 +39,9 @@ async function getWeather() {
         weatherInfoDiv.innerHTML = `
             <h3>Weather in ${data.name}</h3>
             <p>Temperature: ${temperature} °C</p>
-            <p>Feels Like: ${feelsLike} °C</p> <!-- New Feels Like info -->
+            <p>Feels Like: ${feelsLike} °C</p>
             <p>Condition: ${weatherCondition}</p>
+            <p>Humidity: ${humidity}%</p> <!-- Add more data if needed -->
         `;
 
         // Change the background color of the entire body based on temperature
@@ -55,5 +58,60 @@ async function getWeather() {
     } catch (error) {
         console.error('Error fetching weather data:', error);
         weatherInfoDiv.innerHTML = `<p>There was an error fetching the weather data. Please try again.</p>`;
+        body.style.backgroundColor = '#3d3d3d'; // Reset background color to default in case of an error
     }
 }
+// JavaScript to handle the menu toggle functionality
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Get all menu icons
+    const timeIcon = document.getElementById('time-icon');
+    const calendarIcon = document.getElementById('calendar-icon');
+    const weatherIcon = document.getElementById('weather-icon');
+    const alarmIcon = document.getElementById('alarm-icon');
+
+    // Get all content sections
+    const timeContent = document.getElementById('time-content');
+    const calendarContent = document.getElementById('calendar-content');
+    const weatherContent = document.getElementById('weather-content');
+    const alarmContent = document.getElementById('alarm-content');
+
+    // Hide all sections initially
+    timeContent.style.display = 'none';
+    calendarContent.style.display = 'none';
+    weatherContent.style.display = 'none';
+    alarmContent.style.display = 'none';
+
+    // Function to toggle visibility of a section
+    function toggleContent(content) {
+        // Hide all sections first
+        timeContent.style.display = 'none';
+        calendarContent.style.display = 'none';
+        weatherContent.style.display = 'none';
+        alarmContent.style.display = 'none';
+
+        // Toggle the clicked content
+        if (content.style.display === 'none') {
+            content.style.display = 'block';
+        } else {
+            content.style.display = 'none';
+        }
+    }
+
+    // Event listeners for the icons
+    timeIcon.addEventListener('click', function () {
+        toggleContent(timeContent);
+    });
+
+    calendarIcon.addEventListener('click', function () {
+        toggleContent(calendarContent);
+    });
+
+    weatherIcon.addEventListener('click', function () {
+        toggleContent(weatherContent);
+    });
+
+    alarmIcon.addEventListener('click', function () {
+        toggleContent(alarmContent);
+    });
+});
