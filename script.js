@@ -1,6 +1,10 @@
 const apiKey = 'd9a95be1e46eb299df47670fb8166c27'; // Keep your actual API key here
 
 document.getElementById('search-btn').addEventListener('click', getWeather);
+document.getElementById('time-icon').addEventListener('click', toggleContent.bind(null, 'time'));
+document.getElementById('calendar-icon').addEventListener('click', toggleContent.bind(null, 'calendar'));
+document.getElementById('weather-icon').addEventListener('click', toggleContent.bind(null, 'weather'));
+document.getElementById('alarm-icon').addEventListener('click', toggleContent.bind(null, 'alarm'));
 
 async function getWeather() {
     const city = document.getElementById('city-input').value;
@@ -16,17 +20,15 @@ async function getWeather() {
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
         
-        // Check if response is successful
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        // Check if city is found
+        // Check for a 404 error in the response
         if (data.cod === '404') {
             weatherInfoDiv.innerHTML = `<p>City not found. Please try again.</p>`;
-            body.style.backgroundColor = '#3d3d3d'; // Reset background color to default
             return;
         }
 
@@ -39,9 +41,8 @@ async function getWeather() {
         weatherInfoDiv.innerHTML = `
             <h3>Weather in ${data.name}</h3>
             <p>Temperature: ${temperature} °C</p>
-            <p>Feels Like: ${feelsLike} °C</p>
+            <p>Feels Like: ${feelsLike} °C</p> <!-- New Feels Like info -->
             <p>Condition: ${weatherCondition}</p>
-            <p>Humidity: ${humidity}%</p> <!-- Add more data if needed -->
         `;
 
         // Change the background color of the entire body based on temperature
@@ -58,60 +59,78 @@ async function getWeather() {
     } catch (error) {
         console.error('Error fetching weather data:', error);
         weatherInfoDiv.innerHTML = `<p>There was an error fetching the weather data. Please try again.</p>`;
-        body.style.backgroundColor = '#3d3d3d'; // Reset background color to default in case of an error
     }
 }
-// JavaScript to handle the menu toggle functionality
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Get all menu icons
-    const timeIcon = document.getElementById('time-icon');
-    const calendarIcon = document.getElementById('calendar-icon');
-    const weatherIcon = document.getElementById('weather-icon');
-    const alarmIcon = document.getElementById('alarm-icon');
-
-    // Get all content sections
-    const timeContent = document.getElementById('time-content');
-    const calendarContent = document.getElementById('calendar-content');
-    const weatherContent = document.getElementById('weather-content');
-    const alarmContent = document.getElementById('alarm-content');
-
-    // Hide all sections initially
-    timeContent.style.display = 'none';
-    calendarContent.style.display = 'none';
-    weatherContent.style.display = 'none';
-    alarmContent.style.display = 'none';
-
-    // Function to toggle visibility of a section
-    function toggleContent(content) {
-        // Hide all sections first
-        timeContent.style.display = 'none';
-        calendarContent.style.display = 'none';
-        weatherContent.style.display = 'none';
-        alarmContent.style.display = 'none';
-
-        // Toggle the clicked content
-        if (content.style.display === 'none') {
-            content.style.display = 'block';
+function toggleContent(type) {
+    const contents = ['time', 'calendar', 'weather', 'alarm'];
+    contents.forEach(item => {
+        const contentDiv = document.getElementById(`${item}-content`);
+        if (item === type) {
+            contentDiv.style.display = contentDiv.style.display === 'block' ? 'none' : 'block';
+            if (item === 'calendar') {
+                renderCalendar(); // Call the renderCalendar function for the calendar
+                displayCurrentDate(); // Display the current date when calendar is shown
+            }
         } else {
-            content.style.display = 'none';
+            contentDiv.style.display = 'none'; // Hide other contents
         }
+    });
+
+    if (type === 'time') {
+        updateTime();
+    }
+}
+
+function updateTime() {
+    const currentTime = new Date().toLocaleTimeString();
+    document.getElementById('current-time').textContent = `Current Time: ${currentTime}`;
+}
+
+function renderCalendar() {
+    const calendarElement = document.getElementById('calendar');
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const today = date.getDate(); // Get the current day
+
+    // Set the first day of the month
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDay = firstDay.getDay();
+
+    // Clear the calendar
+    calendarElement.innerHTML = '';
+
+    // Create empty slots for the days before the first day
+    for (let i = 0; i < startingDay; i++) {
+        const emptyDiv = document.createElement('div');
+        calendarElement.appendChild(emptyDiv);
     }
 
-    // Event listeners for the icons
-    timeIcon.addEventListener('click', function () {
-        toggleContent(timeContent);
-    });
+    // Fill in the calendar with days and highlight the current day
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.textContent = day;
 
-    calendarIcon.addEventListener('click', function () {
-        toggleContent(calendarContent);
-    });
+        // Highlight the current day
+        if (day === today) {
+            dayDiv.style.backgroundColor = '#ffeb3b'; // Highlight color (yellow)
+            dayDiv.style.color = '#000'; // Text color for contrast (black)
+        }
 
-    weatherIcon.addEventListener('click', function () {
-        toggleContent(weatherContent);
-    });
+        calendarElement.appendChild(dayDiv);
+    }
+}
 
-    alarmIcon.addEventListener('click', function () {
-        toggleContent(alarmContent);
-    });
-});
+// Function to display the current date, month, and year
+function displayCurrentDate() {
+    const currentDateElement = document.getElementById('calendar-header');
+    const date = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    currentDateElement.textContent = date.toLocaleDateString('en-US', options);
+}
+
+// Call renderCalendar on page load to show current month's calendar
+renderCalendar();
